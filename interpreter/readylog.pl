@@ -657,7 +657,7 @@ special_fluent(ltp(_)).
 %special_fluent(online).
 
 initial_val(R,nil) :- register(R).
-initial_val(online,true).
+initial_val(online,false).
 initial_val(eval_registers,true).
 initial_val(sit_start_time,0).
 initial_val(pll([H1],LL1,P), true)  :-
