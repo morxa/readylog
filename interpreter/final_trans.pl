@@ -72,6 +72,9 @@ trans(Ex, S, E_trans, S_trans) :-
 	, flatten(E1, E_trans)
 .
 
+trans_all(Ex, S, TransConfigurations) :-
+  findall([E_trans, S_trans], trans(Ex, S, E_trans, S_trans), TransConfigurations).
+
 /* Sequence.
  * in a final configuration a transition with the tail of the program
  * is executed, otherwhise a transition with the head is executed
