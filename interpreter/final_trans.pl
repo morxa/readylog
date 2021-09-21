@@ -67,7 +67,7 @@ final(E,S) :- proc(E,E1), final(E1,S).
  * Make sure that after trans/4 completes, the history actually contains a new action.
  */
 trans(Ex, S, E_trans, S_trans) :-
-	( flatten(Ex, E) ; E = Ex )
+	( flatten(Ex, E), ! ; E = Ex )
 	, transPr(E, S, E1, S_trans, 1)
 	, flatten(E1, E_trans)
 .
