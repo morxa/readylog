@@ -132,27 +132,8 @@ transPr(waitFor(Cond),S,[],SS,1) :- !,
 transPr(pconc(E1,E2),S,pconc(EE1,EE2),SS,P) :-
 	not final(E1,S), not final(E2,S), !,
 	(
-	  /* case 1: E1 can perform a step */
-	  transPr(E1,S,E3,S3,P3), S3=[Action|_],
-	  (Action\=tossHead -> ! ; true),
-	  ( /*  if no time consumed by action,
-	        no doubt about executing it */
-	  simultaneous(S,S3) ->
-	      EE1=E3, EE2=E2, SS=S3, P=P3
-	  ;
-	      (transPr(E2,S,E4,S4,P4) ->
-		  (earliereq(S3,S4) ->
-		      EE1=E3, EE2=E2, SS=S3, P=P3
-		  ;
-		      EE1=E1, EE2=E4, SS=S4, P=P4
-		  )
-	      ;
-		  EE1=E3, EE2=E2, SS=S3, P=P3
-	      )
-	  )
+	  transPr(E1,S,EE1,SS,P), EE2=E2
 	;
-	  /* case 2: no action possible in E1, try E2 */
-	  \+ transPr(E1,S,_,_,_),
 	  transPr(E2,S,EE2,SS,P), EE1=E1
 	).
 
