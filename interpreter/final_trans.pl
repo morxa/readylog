@@ -35,7 +35,7 @@
  */
 final([],_).
 final([E],S) :- final(E,S).
-final(pconc(E1,E2),S) :-   final(E1,S), !; final(E2,S).
+final(pconc(E1,E2),S) :-   final(E1,S), final(E2,S).
 final([E|L],S) :-	   final(E,S), final(L,S).
 final(if(Cond,E1,E2),S) :-
 	holds(Cond,S) -> final(E1,S) ; final(E2,S).
@@ -130,10 +130,11 @@ transPr(waitFor(Cond),S,[],SS,1) :- !,
  * (earliereq defined in final_trans.pl)
  */
 transPr(pconc(E1,E2),S,pconc(EE1,EE2),SS,P) :-
-	not final(E1,S), not final(E2,S), !,
 	(
+    not final(E1,S),
 	  transPr(E1,S,EE1,SS,P), EE2=E2
 	;
+	  not final(E2,S),
 	  transPr(E2,S,EE2,SS,P), EE1=E1
 	).
 
